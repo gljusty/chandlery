@@ -14,27 +14,23 @@ export enum ScaleModeX {
   QUARTERLY = "QUARTERLY",
 }
 
-export interface IMovingAverages {
-  scale: ScaleModeX;
-  data: number[];
-}
-
-//TODO: add more metadata, cache
-export interface ITickerMetadata {
-  movingAverages: IMovingAverages[];
-}
+//TODO: add metadata, cache
+export interface ITickerMetadata {}
+export interface ITickerCache {}
 
 export interface ITicker {
   id: string;
   meta: ITickerMetadata;
+  cache: ITickerCache;
 }
 
-export interface IChandleryDatum {
+export interface IDatum {
   symbol: ITicker;
-  o: number;
-  h: number;
-  l: number;
-  c: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
 }
 
 export interface ChandleryProps {
@@ -42,6 +38,10 @@ export interface ChandleryProps {
   args: any[];
   options: PluginOptionsByType<ChartType>;
 }
+
+export interface ChandleryTheme {}
+
+export interface ChandleryLayout {}
 
 export interface useChandleryProps {
   data: ChartData;

@@ -1,18 +1,27 @@
-import { ChartOptions } from "chart.js";
-import { useMemo } from "react";
 import { ChandleryPlugin, useChandleryProps } from "../types";
 
+import { useMemo } from "react";
+import { dummyData } from "./utils/data";
+import { defaultChartOptions } from "./utils/options";
+
 export const plugin: ChandleryPlugin = ({ chart, args, options }) => {
+  const {
+    ctx,
+    chartArea: { left, top, width, height },
+  } = chart;
   return {
     id: "chandlery",
-    beforeInit: (ctx = chart.ctx) => {},
+    beforeInit: () => {
+      console.log(ctx);
+    },
+    beforeDraw: () => {
+      console.log(left, top, width, height);
+    },
   };
 };
 
-export const defaultChartOptions: ChartOptions = {};
-
 export default function useChandlery({
-  data,
+  data = dummyData,
   options = defaultChartOptions,
 }: useChandleryProps) {
   const config = useMemo(() => {
