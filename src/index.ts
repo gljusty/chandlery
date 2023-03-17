@@ -1,4 +1,8 @@
-import { ChandleryPlugin, useChandleryProps } from "../types";
+import {
+  ChandleryConfiguration,
+  ChandleryPlugin,
+  useChandleryProps,
+} from "../types";
 
 import { useMemo } from "react";
 import { dummyData } from "./utils/data";
@@ -9,10 +13,14 @@ export const plugin: ChandleryPlugin = ({ chart, args, options }) => {
     ctx,
     chartArea: { left, top, width, height },
   } = chart;
+
   return {
     id: "chandlery",
     beforeInit: () => {
-      console.log(ctx);
+      ctx.fillStyle = "rgb(0,50,100)";
+      ctx.fillRect(left, top, width, height);
+      ctx.restore();
+      //console.log(ctx);
     },
     beforeDraw: () => {
       console.log(left, top, width, height);
@@ -23,7 +31,7 @@ export const plugin: ChandleryPlugin = ({ chart, args, options }) => {
 export default function useChandlery({
   data = dummyData,
   options = defaultChartOptions,
-}: useChandleryProps) {
+}: useChandleryProps): [ChandleryConfiguration, ChandleryPlugin] {
   const config = useMemo(() => {
     return {
       type: "bar",

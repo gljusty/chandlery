@@ -1,9 +1,13 @@
 import {
+  BubbleDataPoint,
   Chart,
   ChartData,
   ChartOptions,
   ChartType,
+  ChartTypeRegistry,
+  Plugin,
   PluginOptionsByType,
+  Point,
 } from "chart.js";
 
 export enum ScaleModeX {
@@ -12,6 +16,11 @@ export enum ScaleModeX {
   WEEKLY = "WEEKLY",
   MONTHLY = "MONTHLY",
   QUARTERLY = "QUARTERLY",
+}
+
+export enum ScaleModeY {
+  LOG = "LOGARITHMIC",
+  LINEAR = "LINEAR",
 }
 
 //TODO: add metadata, cache
@@ -36,18 +45,36 @@ export interface IDatum {
 export interface ChandleryProps {
   chart: Chart;
   args: any[];
-  options: PluginOptionsByType<ChartType>;
+  options: ChandleryOptions;
 }
 
 export interface ChandleryTheme {}
 
-export interface ChandleryLayout {}
+export interface ChandleryLayout {
+  m: number | "auto" | "none" | undefined;
+  p: number | "none" | undefined;
+  theme: ChandleryTheme;
+}
+
+export interface ChandleryOptions extends ChartOptions {}
 
 export interface useChandleryProps {
   data: ChartData;
-  options: ChartOptions;
+  options: ChandleryOptions;
 }
 
-export type ChandleryPlugin = ({ chart, args, options }: ChandleryProps) => {
-  id: string;
+export type ChandleryConfiguration = {
+  type: string;
+  data: ChartData<
+    keyof ChartTypeRegistry,
+    (number | [number, number] | Point | BubbleDataPoint | null)[],
+    unknown
+  >;
+  options: ChandleryOptions;
 };
+
+export type ChandleryPlugin = ({
+  chart,
+  args,
+  options,
+}: ChandleryProps) => Plugin;
