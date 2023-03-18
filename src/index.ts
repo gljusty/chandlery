@@ -7,31 +7,35 @@ import {
 import { useMemo } from "react";
 import { dummyData } from "./utils/data";
 import { defaultChartOptions } from "./utils/options";
+import { Chart, registerables } from "chart.js";
 
-export const plugin: ChandleryPlugin = ({ chart, args, options }) => {
-  const {
-    ctx,
-    chartArea: { left, top, width, height },
-  } = chart;
-
+export const plugin: ChandleryPlugin = () => {
   return {
     id: "chandlery",
-    beforeInit: () => {
-      ctx.fillStyle = "rgb(0,50,100)";
-      ctx.fillRect(left, top, width, height);
-      ctx.restore();
+    beforeInit: (chart, args, pluginOptions) => {
       //console.log(ctx);
     },
-    beforeDraw: () => {
-      console.log(left, top, width, height);
+    beforeDraw: (chart, args, pluginOptions) => {
+      const {
+        ctx,
+        chartArea: { left, top, width, height },
+      } = chart;
+      let gradient = ctx.createLinearGradient(left, top, width, height);
+      gradient.addColorStop(0.0, "rgb(200,50,50)");
+      gradient.addColorStop(1.0, "rgb(50,0,20)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(left, top, width, height);
+      ctx.save();
     },
   };
 };
 
 export default function useChandlery({
-  data = dummyData,
-  options = defaultChartOptions,
+  data,
+  options,
 }: useChandleryProps): [ChandleryConfiguration, ChandleryPlugin] {
+  Chart.register(...registerables);
+
   const config = useMemo(() => {
     return {
       type: "bar",

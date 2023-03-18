@@ -3,10 +3,8 @@ import {
   Chart,
   ChartData,
   ChartOptions,
-  ChartType,
   ChartTypeRegistry,
   Plugin,
-  PluginOptionsByType,
   Point,
 } from "chart.js";
 
@@ -42,12 +40,6 @@ export interface IDatum {
   volume: number;
 }
 
-export interface ChandleryProps {
-  chart: Chart;
-  args: any[];
-  options: ChandleryOptions;
-}
-
 export interface ChandleryTheme {}
 
 export interface ChandleryLayout {
@@ -56,11 +48,15 @@ export interface ChandleryLayout {
   theme: ChandleryTheme;
 }
 
-export interface ChandleryOptions extends ChartOptions {}
+export interface ChandleryOptions extends ChartOptions {
+  chandleryLayout: ChandleryLayout;
+}
+
+export interface ChandleryChartData extends ChartData {}
 
 export interface useChandleryProps {
   data: ChartData;
-  options: ChandleryOptions;
+  options: ChartOptions;
 }
 
 export type ChandleryConfiguration = {
@@ -70,11 +66,7 @@ export type ChandleryConfiguration = {
     (number | [number, number] | Point | BubbleDataPoint | null)[],
     unknown
   >;
-  options: ChandleryOptions;
+  options: ChartOptions | ChandleryOptions;
 };
 
-export type ChandleryPlugin = ({
-  chart,
-  args,
-  options,
-}: ChandleryProps) => Plugin;
+export type ChandleryPlugin = () => Plugin;

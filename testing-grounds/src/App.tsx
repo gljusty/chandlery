@@ -6,26 +6,33 @@ import { defaultChartOptions } from "../../src/utils/options";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  let [context, setContext] = useState<HTMLCanvasElement>(null!);
   const [config, plugin] = useChandlery({
     data: dummyData,
     options: defaultChartOptions,
   });
 
-  const chandlery = useMemo(() => plugin(chart), [plugin]);
+  const chandlery = useMemo(() => plugin(), [plugin]);
 
-  const chart = useMemo(() => {
-    const ctx = document.getElementById("_chart");
-    const c = new Chart(ctx as ChartItem, {
+  useEffect(() => {
+    setContext(document.getElementById("_chart")! as HTMLCanvasElement);
+  }, []);
+
+  useEffect(() => {
+    if (!context) {
+      return;
+    }
+
+    new Chart(context, {
       type: "bar",
-      plugins: [plugin({ chart: c })],
+      plugins: [chandlery],
       options: config.options,
       data: config.data,
     });
-  }, []);
+  }, [context]);
   return (
     <div className="App">
-      <canvas id="_chart" />
+      <canvas id="_chart" height={1200} width={1200} />
     </div>
   );
 }
