@@ -42,10 +42,15 @@ export interface IDatum {
 
 export interface ChandleryTheme {}
 
+export interface ChandleryState {
+  theme: ChandleryTheme;
+  layout: ChandleryLayout;
+}
+
+//TODO: add layout props
 export interface ChandleryLayout {
   m: number | "auto" | "none" | undefined;
   p: number | "none" | undefined;
-  theme: ChandleryTheme;
 }
 
 export interface ChandleryOptions extends ChartOptions {

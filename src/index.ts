@@ -5,15 +5,13 @@ import {
 } from "../types";
 
 import { useMemo } from "react";
-import { dummyData } from "./utils/data";
-import { defaultChartOptions } from "./utils/options";
 import { Chart, registerables } from "chart.js";
 
 export const plugin: ChandleryPlugin = () => {
   return {
     id: "chandlery",
     beforeInit: (chart, args, pluginOptions) => {
-      //console.log(ctx);
+      //
     },
     beforeDraw: (chart, args, pluginOptions) => {
       const {
