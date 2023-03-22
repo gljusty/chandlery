@@ -2,6 +2,7 @@ import {
   BubbleDataPoint,
   Chart,
   ChartData,
+  ChartDataset,
   ChartOptions,
   ChartTypeRegistry,
   Plugin,
@@ -18,7 +19,7 @@ export enum ScaleModeX {
 
 export enum ScaleModeY {
   LOG = "LOGARITHMIC",
-  LINEAR = "LINEAR",
+  LIN = "LINEAR",
 }
 
 //TODO: add metadata, cache
@@ -40,9 +41,14 @@ export interface IDatum {
   volume: number;
 }
 
+export interface IChandleryData extends ChartDataset {
+  data: IDatum[] | number[];
+}
+
+//TODO: implement theme
 export interface ChandleryTheme {}
 
-export interface ChandleryState {
+export interface ChandleryChartState {
   theme: ChandleryTheme;
   layout: ChandleryLayout;
 }
@@ -57,7 +63,9 @@ export interface ChandleryOptions extends ChartOptions {
   chandleryLayout: ChandleryLayout;
 }
 
-export interface ChandleryChartData extends ChartData {}
+export interface ChandleryChartData extends ChartData {
+  datasets: IChandleryData[] | ChartDataset[];
+}
 
 export interface useChandleryProps {
   data: ChartData;
@@ -71,7 +79,8 @@ export type ChandleryConfiguration = {
     (number | [number, number] | Point | BubbleDataPoint | null)[],
     unknown
   >;
-  options: ChartOptions | ChandleryOptions;
+
+  options: ChartOptions;
 };
 
 export type ChandleryPlugin = () => Plugin;

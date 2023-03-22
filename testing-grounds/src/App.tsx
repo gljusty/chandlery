@@ -6,7 +6,7 @@ import { defaultChartOptions } from "../../src/utils/options";
 import "./App.css";
 
 function App() {
-  let [context, setContext] = useState<HTMLCanvasElement>(null!);
+  let [ctx, setContext] = useState<HTMLCanvasElement>(null!);
   const [config, plugin] = useChandlery({
     data: dummyData,
     options: defaultChartOptions,
@@ -19,20 +19,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!context) {
+    if (!ctx) {
       return;
     }
 
-    new Chart(context, {
+    new Chart(ctx, {
       type: "bar",
       plugins: [chandlery],
       options: config.options,
       data: config.data,
     });
-  }, [context]);
+  }, [ctx]);
   return (
     <div className="App">
-      <canvas id="_chart" height={1200} width={1200} />
+      <canvas id="_chart" height={600} width={800} />
     </div>
   );
 }
