@@ -1,13 +1,4 @@
-import {
-  BubbleDataPoint,
-  Chart,
-  ChartData,
-  ChartDataset,
-  ChartOptions,
-  ChartTypeRegistry,
-  Plugin,
-  Point,
-} from "chart.js";
+import { ChartData, ChartDataset, ChartOptions, Plugin } from "chart.js";
 
 export enum ScaleModeX {
   HOURLY = "HOURLY",
@@ -41,8 +32,8 @@ export interface IDatum {
   volume: number;
 }
 
-export interface IChandleryData extends ChartDataset {
-  data: IDatum[] | number[];
+export interface IChandleryDataset extends ChartDataset<any> {
+  data: IDatum[] | ChartData[];
 }
 
 //TODO: implement theme
@@ -59,12 +50,11 @@ export interface ChandleryLayout {
   p: number | "none" | undefined;
 }
 
-export interface ChandleryOptions extends ChartOptions {
-  chandleryLayout: ChandleryLayout;
-}
+//TODO: implement more options
+export interface ChandleryOptions extends ChartOptions {}
 
 export interface ChandleryChartData extends ChartData {
-  datasets: IChandleryData[] | ChartDataset[];
+  datasets: ChartDataset[];
 }
 
 export interface useChandleryProps {
@@ -74,13 +64,9 @@ export interface useChandleryProps {
 
 export type ChandleryConfiguration = {
   type: string;
-  data: ChartData<
-    keyof ChartTypeRegistry,
-    (number | [number, number] | Point | BubbleDataPoint | null)[],
-    unknown
-  >;
+  data: ChartData<any>;
 
-  options: ChartOptions;
+  options?: ChartOptions;
 };
 
 export type ChandleryPlugin = () => Plugin;

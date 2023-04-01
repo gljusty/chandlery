@@ -18,12 +18,12 @@ export const plugin: ChandleryPlugin = () => {
         ctx,
         chartArea: { left, top, width, height },
       } = chart;
+      ctx.save();
       let gradient = ctx.createLinearGradient(left, top, width, height);
       gradient.addColorStop(0.0, "rgb(200,50,50)");
       gradient.addColorStop(1.0, "rgb(50,0,20)");
       ctx.fillStyle = gradient;
       ctx.fillRect(left, top, width, height);
-      ctx.save();
     },
   };
 };

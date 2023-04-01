@@ -1,11 +1,15 @@
-import { ChandleryChartData } from "../../types";
-import { ChartData } from "chart.js";
-
-export const dummyData: ChartData = {
+export const dummyData = {
   datasets: [
     {
       label: "Rounded Test",
-      data: [1, 2, 3, 4, 5, 6],
+      data: [
+        {
+          o: 1,
+          c: 2,
+          l: 1,
+          h: 2.1,
+        },
+      ],
       borderRadius: 5,
       borderSkipped: false,
     },

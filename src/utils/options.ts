@@ -6,4 +6,15 @@ export const defaultChartOptions: ChartOptions = {
     yAxisKey: "y",
   },
   responsive: true,
+  scales: {
+    x: {
+      type: "timeseries",
+      time: {
+        unit: "day",
+      },
+    },
+    y: {
+      beginAtZero: true,
+    },
+  },
 };
