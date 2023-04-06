@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import useChandlery from "../../src/index";
 import { dummyData } from "../../src/utils/data";
 import { defaultChartOptions } from "../../src/utils/options";
+import usePolygon from "../../src/utils/hooks/polygon";
 import "./App.css";
 
 function App() {
@@ -14,10 +15,16 @@ function App() {
   });
 
   const chandlery = useMemo(() => plugin(), [plugin]);
+  const [cachedTicker, getTicker] = usePolygon();
 
   useEffect(() => {
     setContext(document.getElementById("_chart")! as HTMLCanvasElement);
+    getTicker();
   }, []);
+
+  useEffect(() => {
+    console.log(cachedTicker.results[0]);
+  }, [cachedTicker]);
 
   useEffect(() => {
     if (!ctx) {

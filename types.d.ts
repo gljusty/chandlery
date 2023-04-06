@@ -58,7 +58,7 @@ export interface ChandleryChartData extends ChartData {
 }
 
 export interface useChandleryProps {
-  data: ChartData;
+  data: ChartData<any>;
   options: ChartOptions;
 }
 
